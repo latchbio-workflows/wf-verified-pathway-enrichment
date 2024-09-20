@@ -41,7 +41,7 @@ RUN R -e "install.packages('/tmp/docker-build/work/KEGG.db_2.8.0.tar.gz', repos 
 
 # Latch SDK
 # DO NOT REMOVE
-RUN pip install latch==2.50.5
+RUN pip install latch==2.52.2
 RUN mkdir /opt/latch
 
 # Copy workflow data (use .dockerignore to skip files)

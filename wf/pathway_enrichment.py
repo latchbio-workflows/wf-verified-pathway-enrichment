@@ -3,6 +3,7 @@ import sys
 from enum import Enum
 from pathlib import Path
 
+from latch.executions import rename_current_execution
 from latch.resources.tasks import medium_task
 from latch.types.directory import LatchOutputDir
 from latch.types.file import LatchFile
@@ -25,6 +26,8 @@ def pathway_enrichment(
     genome: Reference_Type,
     output_directory: LatchOutputDir = LatchOutputDir("latch:///Pathway_Enrichment"),
 ) -> LatchOutputDir:
+    rename_current_execution(str(run_name))
+
     print("Setting up local files and directories")
     local_output_directory = Path(f"/root/output/{run_name}")
     local_output_directory.mkdir(exist_ok=True, parents=True)
