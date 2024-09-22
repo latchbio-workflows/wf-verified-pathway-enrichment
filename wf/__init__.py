@@ -86,7 +86,7 @@ LaunchPlan(
     {
         "run_name": "human_pe_demo",
         "contrast_file": LatchFile(
-            "s3://latch-public/test-data/18440/human_pe_demo/deseq2_contrast_results.csv"
+            "s3://latch-public/nf-core/rnaseq/launchplan_data/human_pe_demo/deseq2_contrast_results.csv"
         ),
         "genome": Reference_Type.homo_sapiens,
         "output_directory": LatchOutputDir("latch:///Pathway_Enrichment"),

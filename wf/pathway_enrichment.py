@@ -1,3 +1,4 @@
+import json
 import subprocess
 import sys
 from enum import Enum
@@ -57,6 +58,37 @@ def pathway_enrichment(
         ],
         check=True,
     )
+
+    print("Building report")
+    report_artifact_directory = Path(f"/root/output/{run_name}/{run_name}.artifact")
+    report_artifact_directory.mkdir(exist_ok=True, parents=True)
+
+    json_data = {
+        "bindings": {
+            "plotTemplates": [
+                {
+                    "id": "173",
+                    "widgetValues": {},
+                }
+            ]
+        }
+    }
+
+    if str(output_directory.remote_path) != "latch:///Pathway_Enrichment":
+        # json_data["bindings"]["plotTemplates"][0]["widgetValues"].update(
+        #     {"9789/2": {"value": True}, "9789/4": {"value": f"{output_loc}"}}
+        # )
+        json_data["bindings"]["plotTemplates"][0]["widgetValues"].update(
+            {"9789/2": {"value": True}}
+        )
+    else:
+        json_data["bindings"]["plotTemplates"][0]["widgetValues"].update(
+            {"9789/1": {"value": f"{run_name}"}}
+        )
+
+    json_file_path = report_artifact_directory / "artifact.json"
+    with open(json_file_path, "w") as json_file:
+        json.dump(json_data, json_file, indent=2)
 
     print("Uploading results")
     return LatchOutputDir(str("/root/output"), output_directory.remote_path)
