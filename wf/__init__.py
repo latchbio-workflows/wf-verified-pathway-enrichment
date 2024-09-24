@@ -2,9 +2,34 @@ from latch.resources.launch_plan import LaunchPlan
 from latch.resources.workflow import workflow
 from latch.types.directory import LatchOutputDir
 from latch.types.file import LatchFile
-from latch.types.metadata import LatchAuthor, LatchMetadata, LatchParameter
+from latch.types.metadata import (
+    LatchAuthor,
+    LatchMetadata,
+    LatchParameter,
+    LatchRule,
+    Params,
+    Section,
+    Text,
+)
 
 from wf.pathway_enrichment import Reference_Type, pathway_enrichment
+
+flow = [
+    Section(
+        "Input",
+        Params(
+            "contrast_file",
+            "genome",
+        ),
+    ),
+    Section(
+        "Output Directory",
+        Params("run_name"),
+        Text("Parent directory for outputs"),
+        Params("output_directory"),
+    ),
+]
+
 
 metadata = LatchMetadata(
     display_name="Pathway Enrichment",
@@ -19,6 +44,12 @@ metadata = LatchMetadata(
             display_name="Name of Run",
             description="Name of run.",
             batch_table_column=True,
+            rules=[
+                LatchRule(
+                    regex=r"^[a-zA-Z0-9_-]+$",
+                    message="Run name must contain only letters, digits, underscores, and dashes. No spaces are allowed.",
+                )
+            ],
         ),
         "contrast_file": LatchParameter(
             display_name="Input Contrast File",
@@ -36,6 +67,7 @@ metadata = LatchMetadata(
             batch_table_column=True,
         ),
     },
+    flow=flow,
 )
 
 

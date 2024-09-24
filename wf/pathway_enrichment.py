@@ -67,24 +67,16 @@ def pathway_enrichment(
         "bindings": {
             "plotTemplates": [
                 {
-                    "id": "173",
-                    "widgetValues": {},
+                    "id": "176",
+                    "widgetValues": {
+                        "9992/1": {
+                            "value": f"{output_directory.remote_path}/{run_name}"
+                        }
+                    },
                 }
             ]
         }
     }
-
-    if str(output_directory.remote_path) != "latch:///Pathway_Enrichment":
-        # json_data["bindings"]["plotTemplates"][0]["widgetValues"].update(
-        #     {"9789/2": {"value": True}, "9789/4": {"value": f"{output_loc}"}}
-        # )
-        json_data["bindings"]["plotTemplates"][0]["widgetValues"].update(
-            {"9789/2": {"value": True}}
-        )
-    else:
-        json_data["bindings"]["plotTemplates"][0]["widgetValues"].update(
-            {"9789/1": {"value": f"{run_name}"}}
-        )
 
     json_file_path = report_artifact_directory / "artifact.json"
     with open(json_file_path, "w") as json_file:
